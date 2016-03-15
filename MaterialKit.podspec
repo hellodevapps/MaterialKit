@@ -1,5 +1,5 @@
 Pod::Spec.new do |s|
-  s.name         = "MaterialKit (hellodev)"
+  s.name         = "MaterialKit"
   s.version      = "0.41"
   s.summary      = "Material design components for iOS written in Swift"
 
