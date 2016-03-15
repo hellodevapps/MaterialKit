@@ -232,7 +232,7 @@ private extension MKTextField {
         default:
             break
         }
-        floatingLabel.frame = CGRect(x: originX, y: padding.height,
+        floatingLabel.frame = CGRect(x: originX + 40, y: padding.height,
             width: floatingLabel.frame.size.width, height: floatingLabel.frame.size.height)
     }
 
