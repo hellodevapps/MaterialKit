@@ -223,6 +223,7 @@ public class MKTextField : UITextField {
 private extension MKTextField {
     private func setFloatingLabelOverlapTextField() {
         let textRect = textRectForBounds(bounds)
+        
         var originX = textRect.origin.x
         switch textAlignment {
         case .Center:
@@ -232,24 +233,35 @@ private extension MKTextField {
         default:
             break
         }
-        floatingLabel.frame = CGRect(x: originX + 40, y: padding.height,
+        floatingLabel.frame = CGRect(x: originX, y: padding.height,
             width: floatingLabel.frame.size.width, height: floatingLabel.frame.size.height)
     }
-
+    
+    private func getOriginXLeftView() -> CGFloat{
+        var xPosition:CGFloat = 10
+        
+        guard let leftView = self.leftView
+            else{return xPosition}
+        let width = leftView.frame.width
+        xPosition = width
+        return xPosition + 5
+    }
+    
     private func showFloatingLabel() {
         let curFrame = floatingLabel.frame
-        floatingLabel.frame = CGRect(x: curFrame.origin.x, y: bounds.height / 2, width: curFrame.width, height: curFrame.height)
+        floatingLabel.frame = CGRect(x: self.getOriginXLeftView(), y: bounds.height / 2, width: curFrame.width, height: curFrame.height)
         UIView.animateWithDuration(0.45, delay: 0.0, options: .CurveEaseOut,
             animations: {
                 self.floatingLabel.alpha = 1.0
-                self.floatingLabel.frame = curFrame
+                let flotingLabelFrame = CGRect(x: self.getOriginXLeftView(), y: curFrame.origin.y, width: curFrame.width, height: curFrame.height)
+                self.floatingLabel.frame = flotingLabelFrame
             }, completion: nil)
     }
-
+    
     private func hideFloatingLabel() {
         floatingLabel.alpha = 0.0
     }
-
+    
     private func updateFloatingLabelText() {
         floatingLabel.attributedText = attributedPlaceholder
         floatingLabel.sizeToFit()
