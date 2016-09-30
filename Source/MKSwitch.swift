@@ -134,7 +134,7 @@ public class MKSwitch: UIControl {
     }
 
     public override func touchesCancelled(touches: Set<UITouch>?, withEvent event: UIEvent?) {
-        super.touchesCancelled(touches, withEvent: event)
+        super.touchesCancelled(touches!, withEvent: event)
         if let touches = touches {
             if let touch = touches.first {
                 let point = touch.locationInView(self)

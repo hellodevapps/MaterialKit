@@ -121,7 +121,7 @@ public class MKCardView: UIControl {
     }
 
     public override func touchesCancelled(touches: Set<UITouch>?, withEvent event: UIEvent?) {
-        super.touchesCancelled(touches, withEvent: event)
+        super.touchesCancelled(touches!, withEvent: event)
         mkLayer.touchesCancelled(touches, withEvent: event)
     }
 
