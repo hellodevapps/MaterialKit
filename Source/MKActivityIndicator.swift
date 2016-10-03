@@ -16,7 +16,7 @@ public class MKActivityIndicator: UIView {
 
     @IBInspectable public var color: UIColor = UIColor.MKColor.Blue.P500 {
         didSet {
-            drawableLayer.strokeColor = self.color.CGColor
+            drawableLayer.strokeColor = self.color.cgColor
         }
     }
 
@@ -56,22 +56,22 @@ public class MKActivityIndicator: UIView {
         }
 
         self.animating = true
-        self.hidden = false
+        self.isHidden = false
         self.resetAnimations()
     }
 
     public func stopAnimating() {
         self.drawableLayer.removeAllAnimations()
         self.animating = false
-        self.hidden = true
+        self.isHidden = true
     }
 
     private func setup() {
-        self.hidden = true
+        self.isHidden = true
         self.layer.addSublayer(self.drawableLayer)
-        self.drawableLayer.strokeColor = self.color.CGColor
+        self.drawableLayer.strokeColor = self.color.cgColor
         self.drawableLayer.lineWidth = self.lineWidth
-        self.drawableLayer.fillColor = UIColor.clearColor().CGColor
+        self.drawableLayer.fillColor = UIColor.clear.cgColor
         self.drawableLayer.lineCap = kCALineJoinRound
         self.drawableLayer.strokeStart = 0.99
         self.drawableLayer.strokeEnd = 1
@@ -80,19 +80,19 @@ public class MKActivityIndicator: UIView {
     }
 
     private func updateFrame() {
-        self.drawableLayer.frame = CGRectMake(0, 0, CGRectGetWidth(self.bounds), CGRectGetHeight(self.bounds))
+        self.drawableLayer.frame = CGRect(x: 0, y: 0, width: self.bounds.width, height: self.bounds.height)
     }
 
     private func updatePath() {
-        let center = CGPointMake(CGRectGetMidX(self.bounds), CGRectGetMidY(self.bounds))
-        let radius = min(CGRectGetWidth(self.bounds), CGRectGetHeight(self.bounds)) / 2 - self.lineWidth
+        let center = CGPoint(x:self.bounds.midX, y:self.bounds.midY)
+        let radius = min(self.bounds.width, self.bounds.height) / 2 - self.lineWidth
         self.drawableLayer.path = UIBezierPath(
             arcCenter: center,
             radius: radius,
             startAngle: 0,
             endAngle: CGFloat(2 * M_PI),
             clockwise: true)
-            .CGPath
+            .cgPath
     }
 
     private func resetAnimations() {
@@ -103,7 +103,7 @@ public class MKActivityIndicator: UIView {
         rotationAnim.duration = 4
         rotationAnim.toValue = 2 * M_PI
         rotationAnim.repeatCount = Float.infinity
-        rotationAnim.removedOnCompletion = false
+        rotationAnim.isRemovedOnCompletion = false
 
         let startHeadAnim = CABasicAnimation(keyPath: "strokeStart")
         startHeadAnim.beginTime = 0.1
@@ -137,9 +137,9 @@ public class MKActivityIndicator: UIView {
         strokeAnimGroup.duration = 1.5
         strokeAnimGroup.animations = [startHeadAnim, startTailAnim, endHeadAnim, endTailAnim]
         strokeAnimGroup.repeatCount = Float.infinity
-        strokeAnimGroup.removedOnCompletion = false
+        strokeAnimGroup.isRemovedOnCompletion = false
 
-        self.drawableLayer.addAnimation(rotationAnim, forKey: "rotation")
-        self.drawableLayer.addAnimation(strokeAnimGroup, forKey: "stroke")
+        self.drawableLayer.add(rotationAnim, forKey: "rotation")
+        self.drawableLayer.add(strokeAnimGroup, forKey: "stroke")
     }
 }
